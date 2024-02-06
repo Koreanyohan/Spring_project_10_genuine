@@ -67,7 +67,8 @@ public class BoardController {
     // 10장 p.49
     // 2-2. 등록처리     
     @PostMapping("/register") // 위의 메서드는 void 반환이고 이거는 String 반환이라 "~" 부분 같아도 노상관.
-    public String registerPost(BoardDTO dto, RedirectAttributes redictRedirectAttributes, Principal principal) { // Spring컨테이너에 들어있는 principal(from UserDetailsServiceImpl.java)드감 
+    public String registerPost(BoardDTO dto, RedirectAttributes redictRedirectAttributes, Principal principal) { 
+    									// Spring컨테이너에 들어있는 principal(from UserDetailsServiceImpl.java)드감 
     						  	// ㄴ 화면에서 전달받은 게시물정보. 즉, 파라미터	ㄴ 전달자 객체 (model과 기능은 같다. redirect할때 쓸 뿐). 여기에 우리가 등록창에서 입력한 것이 들어옴.
     	
         // 10장 p.49
