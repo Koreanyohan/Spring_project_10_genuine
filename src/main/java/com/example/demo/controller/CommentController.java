@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,17 +37,15 @@ public class CommentController {
 	
 	
 	// 9장 p.18 댓글등록
-	
+	// 10장 p.52
 	@ResponseBody
 	@PostMapping("/register")
-	public HashMap<String,Boolean> register(CommentDTO dto) {
+	public HashMap<String,Boolean> register(CommentDTO dto, Principal principal) {
 		//맵 객체 생성		
 		HashMap<String,Boolean> map = new HashMap<>();
 		
-		// 임시 아이디
-		String id = "JJanggu"; // member table에 있는 값이어야.
-		dto.setWriter(id); 
-	 //  ㄴ 원래는 아이디를 security 기능으로 받아야 하는데, 아직 구현 안되었으니 임시로 이렇게 설정. cf)boardNo는 화면에서 boardNo받으면 됨.
+		String id = principal.getName();
+		dto.setWriter(id);
 		
 		// 새로운 댓글 등록
 		service.register(dto);

@@ -15,5 +15,17 @@ public class HomeController {
 		
 	}
 	
-
+	// 10장 p.41 커스텀 로그인 페이지 반환하는 메서드
+	// controller & view단만 만들어주면됨. 서비스, repository 필요 없음.
+	@GetMapping("/customlogin")
+	public String customLogin() {
+		return "home/login";
+	}
+	
 }
+
+
+
+
+
+

@@ -30,10 +30,15 @@
     <!-- Sidebar-->
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
+  
   <!-- 메인창 사이드바 만들기 8장 p.60 -->
+  
+  <!-- 10장 P.47 -->
         <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/list}"> 회원관리</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/board/list}"> 게시물관리</a>
+			<a class="list-group-item list-group-item-action list-group-item-light p-3" 
+			sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/member/list}">회원관리</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" 
+            sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" th:href="@{/board/list}">게시물관리</a>
             
         </div>
     </div>

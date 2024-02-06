@@ -1,12 +1,20 @@
 package com.example.demo.config;
 
+import java.io.IOException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 // 스프링 시큐리티 설정 클래스
@@ -38,14 +46,38 @@ public class SecurityConfig {
 			.requestMatchers("/member/*").hasRole("ADMIN"); //회원 관리는 관리자이면 접근 가능. USER로 들어가면 액세서 거부됨 뜬다.
 	
 		//10장 p.25   layout->basic.html 54행에 로그아웃 하이퍼링크 추가됨
-		http.formLogin(); //시큐리티가 제공하는 기본 로그인페이지 사용하기
-	    http.logout(); // 로그아웃 처리  로그아웃을 하면 쿠키와 세션이 초기화된다
-	    http.csrf().disable(); //csrf는 get을 제외하여 상태값을 위조(변경)할 수있는 post,put,delete 메소드를 막음    
+		//http.formLogin(); //시큐리티가 제공하는 기본 로그인페이지 사용하기
 		
+		 //10장 p.40
+	    http.formLogin()
+		    .loginPage("/customlogin")    // 로그인 '화면' 주소
+		    .loginProcessingUrl("/login") // 로그인 '처리' 주소
+		    .successHandler(new AuthenticationSuccessHandler() {
+				@Override
+				public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+						Authentication authentication) throws IOException, ServletException {
+					response.sendRedirect("/"); //로그아웃후에 로그인했을때 갈페이지 메인페이지로 설정					
+				}		    	
+		    } 
+            )
+		    .permitAll();	  // 접근 권한	    
 	    
 	    
+	 
+	    http.csrf().disable(); //csrf는 get을 제외하여 상태값을 위조(변경)할 수있는 post,put,delete 메소드를 막음
+	    http.logout(); // 로그아웃 처리  로그아웃을 하면 쿠키와 세션이 초기화된다
+		
+	      
 	    
 	    return http.build();
 	    
 		}
 }
+
+
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 /*8장 p.9*/
 package com.example.demo.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -62,10 +64,16 @@ public class BoardController {
     	
     }
         
-    // 2-2. 등록처리
+    // 10장 p.49
+    // 2-2. 등록처리     
     @PostMapping("/register") // 위의 메서드는 void 반환이고 이거는 String 반환이라 "~" 부분 같아도 노상관.
-    public String registerPost(BoardDTO dto, RedirectAttributes redictRedirectAttributes) {
+    public String registerPost(BoardDTO dto, RedirectAttributes redictRedirectAttributes, Principal principal) { // Spring컨테이너에 들어있는 principal(from UserDetailsServiceImpl.java)드감 
     						  	// ㄴ 화면에서 전달받은 게시물정보. 즉, 파라미터	ㄴ 전달자 객체 (model과 기능은 같다. redirect할때 쓸 뿐). 여기에 우리가 등록창에서 입력한 것이 들어옴.
+    	
+        // 10장 p.49
+    	String id = principal.getName();
+    	dto.setWriter(id);   // dto의 작성자를 입력할 필요 없이, 로그인한 객체로부터 바로 받음.
+    	
     	// 게시물 등록하고 새로운 게시물 번호 반환
     	int no = service.register(dto);
     	
