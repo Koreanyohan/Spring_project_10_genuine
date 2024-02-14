@@ -10,7 +10,7 @@ public class CustomUser extends User { // 스프링 시큐리티의 User 클래�
 	
 	public CustomUser (MemberDTO dto) { 
 		super(dto.getId(), dto.getPassword(), Arrays.asList(new SimpleGrantedAuthority(dto.getRole())));
-		// ㄴ 부모클래스(User)의 생성자를 호출하여 인증 객체를 생성한다. 권한은 시큐리티에서 사용하는 SimpleGrantedAuthority로 변환한다.
+		// ㄴ 부모클래스(User)의 생성자를 호출하여 인증 객체를 생성한다. 권한은 시큐리티에서 사용하는 SimpleGrantedAuthority로 변환한다..
 	
 	}
 }
